@@ -57,7 +57,7 @@
             // installedApplicationsLabel
             // 
             this.installedApplicationsLabel.AutoSize = true;
-            this.installedApplicationsLabel.Location = new System.Drawing.Point(9, 28);
+            this.installedApplicationsLabel.Location = new System.Drawing.Point(9, 50);
             this.installedApplicationsLabel.Name = "installedApplicationsLabel";
             this.installedApplicationsLabel.Size = new System.Drawing.Size(109, 13);
             this.installedApplicationsLabel.TabIndex = 5;
@@ -67,14 +67,14 @@
             // 
             this.searchBox.Location = new System.Drawing.Point(183, 47);
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(169, 20);
+            this.searchBox.Size = new System.Drawing.Size(214, 20);
             this.searchBox.TabIndex = 6;
             this.searchBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // searchLabel
             // 
             this.searchLabel.AutoSize = true;
-            this.searchLabel.Location = new System.Drawing.Point(237, 28);
+            this.searchLabel.Location = new System.Drawing.Point(256, 28);
             this.searchLabel.Name = "searchLabel";
             this.searchLabel.Size = new System.Drawing.Size(44, 13);
             this.searchLabel.TabIndex = 7;
@@ -83,7 +83,7 @@
             // countLabel
             // 
             this.countLabel.AutoSize = true;
-            this.countLabel.Location = new System.Drawing.Point(12, 50);
+            this.countLabel.Location = new System.Drawing.Point(12, 72);
             this.countLabel.Name = "countLabel";
             this.countLabel.Size = new System.Drawing.Size(45, 13);
             this.countLabel.TabIndex = 8;
