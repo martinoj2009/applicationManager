@@ -31,15 +31,24 @@ namespace WindowsFormsApplication1
         {
             //Clear the listbox each time of unreleated terms
             listBox1.Items.Clear();
-            //Search the array for text, using Regex
-            for (int i = 0; i < programArray.Length; i++)
-            {
 
-                if (System.Text.RegularExpressions.Regex.Match(programArray[i], searchBox.Text.ToString(), RegexOptions.IgnoreCase).Success)
+            //Search the array for text, using Regex
+            try
+            {
+                for (int i = 0; i < programArray.Length; i++)
                 {
-                    listBox1.Items.Add(programArray[i].ToString());
+
+                    if (System.Text.RegularExpressions.Regex.Match(programArray[i], searchBox.Text.ToString(), RegexOptions.IgnoreCase).Success)
+                    {
+                        listBox1.Items.Add(programArray[i].ToString());
+                    }
                 }
             }
+            catch(Exception)
+            {
+
+            }
+            
             countLabel.Text = listBox1.Items.Count.ToString();
         }
 
@@ -61,7 +70,7 @@ namespace WindowsFormsApplication1
                     {
                         try
                         {
-                            if(subkey.GetValue("DisplayName").ToString() == listBox1.SelectedItem.ToString())
+                            if(subkey.GetValue("DisplayName").ToString().TrimStart() == listBox1.SelectedItem.ToString())
                             {
                                 string uninstallCommand = null;
                                 try
@@ -76,8 +85,17 @@ namespace WindowsFormsApplication1
 
                                 if(uninstallCommand != null)
                                 {
+                                    var process = new Process
+                                    {
+                                        StartInfo = new ProcessStartInfo
+                                        {
+                                            FileName = uninstallCommand
+                                        }
+                                    };
+                                    process.Start();
+                                    process.WaitForExit();
                                     //Now try to uninstall the program
-                                    Process.Start(uninstallCommand);
+                                    //Process.Start(uninstallCommand);
                                 }
                                 
                                 
@@ -120,10 +138,38 @@ namespace WindowsFormsApplication1
         private void updateInstalledPrograms()
         {
             listBox1.Items.Clear();
+            
 
+            //Open registry key location
+            RegistryKey uninstallRegistry = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
+            foreach(string subkey_name in uninstallRegistry.GetSubKeyNames())
+            {
+                using (RegistryKey subkey = uninstallRegistry.OpenSubKey(subkey_name))
+                {
+                    try
+                    {
+                        string productName = subkey.GetValue("DisplayName").ToString().TrimStart();
+                        if(productName != "")
+                        {
+                            listBox1.Items.Add(productName);
+                        }
+                        
+                    }
+                    catch(Exception)
+                    {
 
+                    }
+                }
+            }
 
+            programArray = new string[listBox1.Items.Count];
+            for (int i = 0; i < listBox1.Items.Count; i++)
+            {
+                object s = listBox1.Items[i];
+                programArray[i] = s.ToString();
+            }
 
+            /*
             //Get list of installed software
             string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
@@ -136,7 +182,13 @@ namespace WindowsFormsApplication1
                     {
                         try
                         {
-                            listBox1.Items.Add(subkey.GetValue("DisplayName"));
+                            string productName = subkey.GetValue("DisplayName").ToString();
+                            if (productName != "")
+                            {
+                                productName = productName.TrimStart();
+                                listBox1.Items.Add(productName);
+                            }
+                            
                         }
                         catch (Exception)
                         {
@@ -156,8 +208,9 @@ namespace WindowsFormsApplication1
 
                 }
             }
+            */
             countLabel.Text = listBox1.Items.Count.ToString();
-            registry_key = null;
+            //registry_key = null;
             listBox1.Sorted = true;
         }
     }
