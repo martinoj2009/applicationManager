@@ -23,38 +23,8 @@ namespace WindowsFormsApplication1
 
             //MessageBox.Show(System.Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE"));
 
-
-            //Get list of installed software
-            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
-            {
-                foreach (string subkey_name in key.GetSubKeyNames())
-                {
-                    using (RegistryKey subkey = key.OpenSubKey(subkey_name))
-                    {
-                        try
-                        {
-                            listBox1.Items.Add(subkey.GetValue("DisplayName"));
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-                    }
-
-                    programArray = new string[listBox1.Items.Count];
-                    for (int i = 0; i < listBox1.Items.Count; i++)
-                    {
-                        object s = listBox1.Items[i];
-                        programArray[i] = s.ToString();
-                    }
-
-
-
-
-                }
-            }
-            countLabel.Text = listBox1.Items.Count.ToString();
+            //This will update the list of install programs
+            updateInstalledPrograms();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -132,6 +102,7 @@ namespace WindowsFormsApplication1
 
                 }
             }
+            updateInstalledPrograms();
         }
 
         private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -144,6 +115,44 @@ namespace WindowsFormsApplication1
             about aboutBox = new about();
             aboutBox.ShowDialog();
             aboutBox = null;
+        }
+
+        private void updateInstalledPrograms()
+        {
+            listBox1.Items.Clear();
+
+            //Get list of installed software
+            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
+            {
+                foreach (string subkey_name in key.GetSubKeyNames())
+                {
+                    using (RegistryKey subkey = key.OpenSubKey(subkey_name))
+                    {
+                        try
+                        {
+                            listBox1.Items.Add(subkey.GetValue("DisplayName"));
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+
+                    programArray = new string[listBox1.Items.Count];
+                    for (int i = 0; i < listBox1.Items.Count; i++)
+                    {
+                        object s = listBox1.Items[i];
+                        programArray[i] = s.ToString();
+                    }
+
+
+
+
+                }
+            }
+            countLabel.Text = listBox1.Items.Count.ToString();
+            registry_key = null;
         }
     }
 }
