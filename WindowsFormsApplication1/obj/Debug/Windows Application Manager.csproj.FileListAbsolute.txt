@@ -6,3 +6,4 @@ D:\Documents\Visual Studio 2015\Projects\applicationManager\WindowsFormsApplicat
 D:\Documents\Visual Studio 2015\Projects\applicationManager\WindowsFormsApplication1\bin\Debug\Windows Application Manager.pdb
 D:\Documents\Visual Studio 2015\Projects\applicationManager\WindowsFormsApplication1\obj\Debug\Windows Application Manager.exe
 D:\Documents\Visual Studio 2015\Projects\applicationManager\WindowsFormsApplication1\obj\Debug\Windows Application Manager.pdb
+D:\Documents\Visual Studio 2015\Projects\applicationManager\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.about.resources

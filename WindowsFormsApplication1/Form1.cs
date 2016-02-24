@@ -133,5 +133,17 @@ namespace WindowsFormsApplication1
                 }
             }
         }
+
+        private void viewCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/martinoj2009/applicationManager/blob/master/WindowsFormsApplication1/Form1.cs");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            about aboutBox = new about();
+            aboutBox.ShowDialog();
+            aboutBox = null;
+        }
     }
 }
