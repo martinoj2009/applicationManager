@@ -121,12 +121,17 @@ namespace WindowsFormsApplication1
         {
             listBox1.Items.Clear();
 
+
+
+
             //Get list of installed software
             string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
             {
                 foreach (string subkey_name in key.GetSubKeyNames())
                 {
+                    
+
                     using (RegistryKey subkey = key.OpenSubKey(subkey_name))
                     {
                         try
@@ -153,6 +158,7 @@ namespace WindowsFormsApplication1
             }
             countLabel.Text = listBox1.Items.Count.ToString();
             registry_key = null;
+            listBox1.Sorted = true;
         }
     }
 }
